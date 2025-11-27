@@ -20,13 +20,15 @@ A container-first FastAPI control panel that fans your prompts out to any number
 
 # Optional: adjust config/llm_config.json before first launch
 
-# Set UI credentials + host port, then start the stack
+# Set UI credentials, then start the stack
  export BASIC_AUTH_USER=admin
  export BASIC_AUTH_PASS=supersecret
- export APP_PORT=8080
  docker-compose up --build
 ```
-Browse to `http://localhost:8080` and authenticate. If you remove every entry from `config/llm_config.json` (or delete the file entirely), the Home route automatically redirects to **Configure APIs** so you must define providers before using the prompt console. The template ships with a mock OpenAI provider, so you'll land directly on Home until you edit the config.
+Browse to `http://localhost:8000` (or the port you configure) and authenticate. If you remove every entry from `config/llm_config.json` (or delete the file entirely), the Home route automatically redirects to **Configure APIs** so you must define providers before using the prompt console. The template ships with a mock OpenAI provider, so you'll land directly on Home until you edit the config.
+
+### Changing the exposed port
+Update the `x-app-port` value near the top of `docker-compose.yml` to any port string (e.g., `"9000"`) and rerun `docker compose up`. The YAML anchor fans that value out to the `PORT` environment variable, container `ports` mapping, and the `uvicorn --port` flag, so a single edit keeps everything in sync.
 
 ### Running Locally without Docker
 ```bash
