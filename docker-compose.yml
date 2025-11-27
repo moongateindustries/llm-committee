@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  llm-committee:
+    build: .
+    container_name: llm-committee
+    environment:
+      PORT: 8000
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-admin}
+      BASIC_AUTH_PASS: ${BASIC_AUTH_PASS:-supersecret}
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    volumes:
+      - ./static:/app/static:ro
+      - ./logs:/app/logs
+      - ./config:/app/config
+      - ./state:/app/state
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    restart: unless-stopped

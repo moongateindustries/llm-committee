@@ -1,0 +1,13 @@
+{
+  "providers": [
+    {
+      "name": "openai",
+      "display_name": "Mock OpenAI",
+      "base_url": "https://api.openai.com/v1/chat/completions",
+      "model": "gpt-3.5-turbo",
+      "timeout": 30,
+      "mock": false,
+      "description": "Default mock provider used for local testing. Replace with a real provider when deploying."
+    }
+  ]
+}

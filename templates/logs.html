@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="space-y-6">
+    <header>
+        <h2 class="text-3xl font-semibold">Live Logs</h2>
+        <p class="text-slate-300">Latest events from the FastAPI backend.</p>
+    </header>
+    <div class="bg-black border border-slate-700 rounded-2xl p-4 font-mono text-sm" id="logs-container">
+        <p class="text-slate-200">Loading logs...</p>
+    </div>
+</section>
+<script src="/static/js/logs.js" defer></script>
+{% endblock %}

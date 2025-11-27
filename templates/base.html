@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLM Committee</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body class="bg-slate-900 text-slate-100">
+<div class="flex min-h-screen">
+    <aside class="w-64 bg-slate-950 border-r border-slate-800 p-6 space-y-6">
+        <h1 class="text-2xl font-semibold tracking-wide">LLM Committee</h1>
+        <nav class="flex flex-col space-y-2 uppercase text-xs tracking-widest">
+            <a href="/" class="nav-link {% if page == 'home' %}active{% endif %}">Home</a>
+            <a href="/configure" class="nav-link {% if page == 'configure' %}active{% endif %}">Configure APIs</a>
+            <a href="/logs" class="nav-link {% if page == 'logs' %}active{% endif %}">Logs</a>
+        </nav>
+        <div class="text-xs text-slate-300">
+            <p>Set credentials with <code>BASIC_AUTH_USER</code> and <code>BASIC_AUTH_PASS</code>.</p>
+	    <p>In docker-compose.yml </p>	
+        </div>
+    </aside>
+    <main class="flex-1 p-8 overflow-y-auto">
+        {% block content %}{% endblock %}
+    </main>
+</div>
+</body>
+</html>

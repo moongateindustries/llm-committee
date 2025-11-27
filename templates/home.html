@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="space-y-6">
+    <header>
+        <h2 class="text-3xl font-semibold">Ask the Committee</h2>
+        <p class="text-slate-300">Broadcast your prompt to every configured provider. Responses are shown side-by-side.</p>
+    </header>
+    <form id="prompt-form" class="bg-slate-900 border border-slate-700 rounded-2xl p-6 space-y-4">
+        <label class="text-sm uppercase tracking-widest text-slate-200">Prompt</label>
+        <textarea id="prompt-input" class="w-full bg-slate-900 border border-slate-700 rounded p-3 font-mono" rows="4" placeholder="Describe your task..."></textarea>
+        <button type="submit" class="btn-primary">Send to LLMs</button>
+        <p id="prompt-error" class="text-sm text-red-400 hidden"></p>
+    </form>
+    <div id="responses" class="grid gap-4 md:grid-cols-2"></div>
+</section>
+<script>window.__LLM_PROVIDERS__ = {{ providers | tojson | safe }};</script>
+<script src="/static/js/home.js" defer></script>
+{% endblock %}

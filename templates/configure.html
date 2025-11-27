@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="space-y-8 text-slate-100">
+    <header class="space-y-2">
+        <h2 class="text-3xl font-semibold">Configure Providers &amp; Keys</h2>
+        <p class="text-slate-300">Provider definitions and API keys are now persisted inside the container volume so they survive restarts.</p>
+    </header>
+    <div class="grid gap-8 lg:grid-cols-2">
+        <div class="bg-slate-900/80 border border-slate-700 rounded-2xl p-6 space-y-4" id="builder-panel">
+            <div>
+                <h3 class="text-xl font-semibold">Add or Update a Provider</h3>
+                <p class="text-sm text-slate-300">Enter an API endpoint and we will infer a starting template. You can tweak any field before saving.</p>
+            </div>
+            <form id="provider-introspect-form" class="space-y-3">
+                <label class="text-xs font-semibold tracking-widest text-slate-200">API endpoint URL</label>
+                <div class="flex flex-col gap-3 md:flex-row">
+                    <input type="url" id="introspect-url" class="key-input flex-1" placeholder="https://api.openai.com/v1/chat/completions" required />
+                    <button type="submit" class="btn-secondary">Detect provider</button>
+                </div>
+                <p id="introspect-status" class="text-sm text-slate-300"></p>
+            </form>
+            <form id="provider-form" class="space-y-4 hidden">
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold tracking-widest text-slate-200">Internal name</label>
+                        <input type="text" id="provider-name" class="key-input" placeholder="openai-prod" required />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold tracking-widest text-slate-200">Display name</label>
+                        <input type="text" id="provider-display-name" class="key-input" placeholder="OpenAI Production" required />
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold tracking-widest text-slate-200">Base URL (supports <code>{{ '{{' }}api_key{{ '}}' }}</code>)</label>
+                    <input type="text" id="builder-base-url" class="key-input" placeholder="https://api.example.com/v1/..." required />
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold tracking-widest text-slate-200">Description</label>
+                    <textarea id="provider-description" class="key-input h-20" placeholder="Optional notes"></textarea>
+                </div>
+                <div class="grid gap-4 md:grid-cols-2">
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold tracking-widest text-slate-200">Timeout (seconds)</label>
+                        <input type="number" id="provider-timeout" class="key-input" min="5" max="300" value="60" required />
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-semibold tracking-widest text-slate-200">Requires API key</label>
+                        <div class="flex items-center gap-3">
+                            <input type="checkbox" id="provider-requires-key" class="h-4 w-4" checked />
+                            <span class="text-sm text-slate-200">Add Authorization header</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2" id="provider-notes"></div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <label class="text-xs font-semibold tracking-widest text-slate-200">Provider variables</label>
+                        <button type="button" class="btn-secondary text-xs" id="add-variable">Add variable</button>
+                    </div>
+                    <div id="variable-fields" class="space-y-3"></div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-xs font-semibold tracking-widest text-slate-200">Request template (JSON)</label>
+                    <textarea id="request-template" class="key-input font-mono text-sm h-48" spellcheck="false"></textarea>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <button type="submit" class="btn-primary">Save provider</button>
+                    <button type="button" id="cancel-builder" class="btn-secondary">Reset form</button>
+                </div>
+                <p id="provider-form-status" class="text-sm"></p>
+            </form>
+        </div>
+        <div class="space-y-6">
+            <div class="bg-slate-900/80 border border-slate-700 rounded-2xl p-6 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold">Configured providers</h3>
+                        <p class="text-sm text-slate-300">Saved to <code>/app/state/providers.json</code>.</p>
+                    </div>
+                    <button id="reload-config" class="btn-secondary">Reload file</button>
+                </div>
+                <p id="reload-status" class="text-sm text-slate-300"></p>
+                <div id="provider-list" class="space-y-3"></div>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-700 rounded-2xl p-6 space-y-4">
+                <div>
+                    <h3 class="text-xl font-semibold">API keys</h3>
+                    <p class="text-sm text-slate-300">Keys are written to <code>/app/state/api_keys.json</code> inside the Docker volume.</p>
+                </div>
+                <form id="keys-form" class="space-y-4">
+                    <div id="keys-grid" class="space-y-3"></div>
+                    <button type="submit" class="btn-primary">Save keys</button>
+                    <p id="keys-status" class="text-sm"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/static/js/configure.js" defer></script>
+{% endblock %}
