@@ -1,5 +1,15 @@
 # LLM Committee
 
+A cheap knock off of https://github.com/karpathy/llm-council. 
+
+I made this because i prefer docker containers and I don't like openrouter.
+
+almost 100% 'vibe coded', README included
+
+--
+
+
+
 A container-first FastAPI control panel that fans your prompts out to any number of LLM providers. Provider definitions live in a JSON file that can be edited from the UI, API keys persist inside a writable volume, and a small Tailwind UI exposes "Home", "Configure APIs", and "Logs" views.
 
 ## Highlights
